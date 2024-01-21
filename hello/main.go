@@ -1,43 +1,50 @@
 package main
 
 import (
-	"bytes"
-	"context"
-	"encoding/json"
-
+	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"sync"
 )
 
-// Response is of type APIGatewayProxyResponse since we're leveraging the
-// AWS Lambda Proxy Request functionality (default behavior)
-//
-// https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
-type Response events.APIGatewayProxyResponse
+var (
+	userName      string
+	userNameMutex sync.Mutex
+)
 
-// Handler is our lambda handler invoked by the `lambda.Start` function call
-func Handler(ctx context.Context) (Response, error) {
-	var buf bytes.Buffer
+func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Println("Received body: ", request.Body)
 
-	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your function executed successfully!",
-	})
-	if err != nil {
-		return Response{StatusCode: 404}, err
+	if request.HTTPMethod == "GET" {
+		return events.APIGatewayProxyResponse{
+			Body:       "Please enter your name.",
+			StatusCode: 200,
+			Headers: map[string]string{
+				"Content-Type": "text/plain",
+			},
+		}, nil
+	} else if request.HTTPMethod == "POST" {
+		userNameMutex.Lock()
+		defer userNameMutex.Unlock()
+
+		userName = request.Body
+
+		return events.APIGatewayProxyResponse{
+			Body:       fmt.Sprintf("Hello, %s!", userName),
+			StatusCode: 200,
+			Headers: map[string]string{
+				"Content-Type": "text/plain",
+			},
+		}, nil
 	}
-	json.HTMLEscape(&buf, body)
 
-	resp := Response{
-		StatusCode:      200,
-		IsBase64Encoded: false,
-		Body:            buf.String(),
+	return events.APIGatewayProxyResponse{
+		Body:       "Invalid request",
+		StatusCode: 400,
 		Headers: map[string]string{
-			"Content-Type":           "application/json",
-			"X-MyCompany-Func-Reply": "hello-handler",
+			"Content-Type": "text/plain",
 		},
-	}
-
-	return resp, nil
+	}, nil
 }
 
 func main() {
