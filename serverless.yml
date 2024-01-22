@@ -12,6 +12,7 @@ package:
     - '!./**'
     - ./bin/**
 
+# function과 events 에 관해 - https://www.serverless.com/framework/docs/providers/aws/guide/intro
 functions:
   hello:
     handler: bin/hello
@@ -25,3 +26,4 @@ functions:
       - httpApi:
           path: /world
           method: get
+    # provisionedConcurrency: 5
