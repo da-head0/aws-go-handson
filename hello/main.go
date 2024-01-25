@@ -13,7 +13,8 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	fmt.Println("Received body: ", request.Body)
 
 	return events.APIGatewayProxyResponse{
-		Body: request.Body,
+		Body:       request.Body,
+		StatusCode: 200,
 	}, nil
 }
 

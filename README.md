@@ -23,6 +23,12 @@
 npm install -g serverless
 ```
 
+[go](https://go.dev/doc/install) 설치
+```
+- OS에 맞는 Go 다운로드
+
+```
+
 Getting Started
 ```
 git clone https://github.com/da-head0/aws-go-handson.git
