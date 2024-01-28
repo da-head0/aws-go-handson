@@ -1,10 +1,12 @@
-service: myservice
+service: myservice-test
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: go1.x
 
-# you can overwrite defaults here
   region: ap-northeast-2
 
 package:
@@ -12,18 +14,22 @@ package:
     - '!./**'
     - ./bin/**
 
-# function과 events 에 관해 - https://www.serverless.com/framework/docs/providers/aws/guide/intro
+# function - 실행과 배포의 독립된 단위로, 마이크로서비스와 유사합니다.
+# 사용 예제 - 데이터베이스에 사용자를 저장, 데이터베이스에 있는 파일 처리, 스케줄이 지정된 동작 실행 같은 하나의 job을 실행합니다.
 functions:
   hello:
+    # AWS Lambda 를 사용하기 위해 필요
     handler: bin/hello
+    # functions은 event로 인해 실행됩니다.
+    # event의 예시 - Rest API, S3 Bucket에 이미지 업로드, Cloudwatch cron 스케줄, SNS 토픽의 메시지
     events:
+      # HTTP API (API Gateway v2) - v1 보다 빠르고 비용이 저렴합니다.
       - httpApi:
           path: /hello
-          method: post
+          method: get
   world:
     handler: bin/world
     events:
       - httpApi:
           path: /world
           method: get
-    # provisionedConcurrency: 5

@@ -31,8 +31,7 @@ npm install -g serverless
 
 Getting Started
 ```
-git clone https://github.com/da-head0/aws-go-handson.git
-cd aws-go-handson
+serverless create -t aws-go-mod -p myservice
 ```
 
 AWS Credential 정보 입력
@@ -44,11 +43,13 @@ export ...
 배포
 
 ```
+make
 sls deploy
 ```
 
 특정 함수만 빠르게 배포
 ```
+make
 sls deploy function --function hello
 
 # 코드 배포가 안 될 때  
@@ -63,5 +64,5 @@ curl -XPOST $endpoint -H "Content-Type: text/plain" -d '$입력할 내용'
 
 제거
 ```
-serverless remove
+sls remove
 ```
