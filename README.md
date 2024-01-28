@@ -1,14 +1,16 @@
 ### [Serverless Framework](https://www.serverless.com/)란? 
+- AWS 등의 클라우드에 API 배포 등을 쉽게 할 수 있는 프레임워크
 - Deliver software with radically less overhead.
 
 #### 장점
 - `serverless deploy`라는 명령어 한 줄로 코드를 클라우드 환경에 배포할 수 있음
-- 특정 클라우드 업체에 종속되지 않음
-- 애플리케이션이 돌아가는 인프라의 자동적인 확장과 축소가 가능
-- 트래픽이 없어 코드가 작동하지 않을 때 요금이 발생하지 않음
+- 특정 클라우드 업체에 종속되지 않음 (AWS, GCP, Azure… )
+- 애플리케이션이 돌아가는 인프라의 자동적인 확장과 축소가 가능 (동시성 설정)
+- 요청이 없어 호출이 없을 때 요금이 발생하지 않음
 - 코드와 인프라를 함께 배포하여 바로 사용할 수 있는 서버리스 애플리케이션 제공
-- Go, Node.js, Python, Java, C#, Ruby, Swift, Kotlin, PHP, Scala 등을 지원
-- 개발, 스테이지, 프로덕션 등 다중 환경 지원
+- Go, Node.js, Python, Java, C#, Ruby, Swift, Kotlin, PHP, Scala 등 지원
+- dev, stage, production 등 다중 환경 지원
+
 
 ### 왜 AWS와 함께?
 - Serverless 프레임워크의 기본 클라우드 제공사
@@ -24,10 +26,7 @@ npm install -g serverless
 ```
 
 [go](https://go.dev/doc/install) 설치
-```
 - OS에 맞는 Go 다운로드
-
-```
 
 Getting Started
 ```
